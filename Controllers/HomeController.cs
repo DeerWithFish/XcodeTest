@@ -38,7 +38,7 @@ namespace XcodeTest.Controllers
 
         public IActionResult GetUserList()
         {
-
+            
             var user2 = DtUser.FindAll();
 
 

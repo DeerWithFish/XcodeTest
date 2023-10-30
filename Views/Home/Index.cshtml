@@ -3,10 +3,43 @@
 
 }
 
-<div id="app">
-    @* <i-button v-on:click="show">Click me!</i-button>
-    <Modal v-model="visible" title="Welcome">Welcome to ViewUI</Modal>
-    <i-button type="primary">Primary Button</i-button> *@
+<div id="app" style="margin:20px;">
+   
+    <div style="margin-bottom:10px">
+        <i-button type="primary" v-on:click="add_modal = true">Add</i-button>
+    </div>
+    <i-table stripe border  v-bind:columns="list_columns" v-bind:data="list"  >
+        <template slot-scope="{ row }" slot="show_name">
+            <strong style="color:red">{{ row.Name }}</strong>
+        </template>
+        <template slot-scope="{ row, index }" slot="action">
+            <i-button type="primary" size="small" style="margin-right: 5px" v-on:click="showInfo(index)">View</i-button>
+            <i-button type="error" size="small" v-on:click="remove(index)">Delete</i-button>
+        </template>
+    </i-table>
+
+    <Modal v-model="add_modal"
+           title="Add"
+           v-on:on-ok="ok('formValidate')"
+           v-on:on-cancel="cancel"
+           ok-text="OK"
+           cancel-text="Cancel">
+        <template>
+            <i-form v-bind:model="add_user" v-bind:rules="ruleValidate" ref="addValidate" v-bind:label-width="100">
+                <form-item label="Name">
+                    <i-input v-model="add_user.Name" placeholder="Name...">
+                        <Icon type="ios-person-outline" slot="prepend"></Icon>
+                    </i-input>
+                </form-item>
+
+                <form-item label="DisplayName">
+                    <i-input v-model="add_user.DisplayName" placeholder="DisplayName...">
+                        <Icon type="ios-person-outline" slot="prepend"></Icon>
+                    </i-input>
+                </form-item>
+            </i-form>
+        </template>
+    </Modal>
 </div>
 
 <script src="~/js/home/index.js"></script>
